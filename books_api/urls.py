@@ -6,5 +6,5 @@ from rest_framework import routers
 
 urlpatterns = [
     path('books/<int:id>', BookView.as_view()),
-    path(r'books', BookViewSet.as_view())
+    path(r'books/', BookViewSet.as_view())
 ]

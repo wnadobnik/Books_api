@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from books_api.models import Book, Author, Category
+from collections import OrderedDict
 
+EMPTY_VALUES = ('', None, [], ())
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +22,7 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['title', 'authors', 'published_date', 'categories',
                   'average_rating', 'ratings_count', 'thumbnail']
+
+    def to_representation(self, instance):
+        result = super(BookSerializer, self).to_representation(instance)
+        return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
